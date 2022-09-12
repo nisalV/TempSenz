@@ -8,24 +8,38 @@ function(input, output, session){
   
   # Rendering the box header  
   output$head1 <- renderText(
-    paste("5 districts with high rate of", input$var2)
+    switch(
+      input$var2,
+      "Lowest.Temperature" = paste("Lowest Temperature Records in 5 Districts [TOP]"),
+      "Highest.Temperature" = paste("Highest Temperature Records in 5 Districts [TOP]"),
+      "Average.Temperature" = paste("Average Temperature Records in 5 Districts [TOP]"),
+      "Humidity" = paste("Humidity Records in 5 Districts [TOP]"),
+    )
   )
   
   # Rendering the box header 
   output$head2 <- renderText(
-    paste("5 districts with low rate of", input$var2)
+    switch(
+      input$var2,
+      "Lowest.Temperature" = paste("Lowest Temperature Records in 5 Districts [BOTTOM]"),
+      "Highest.Temperature" = paste("Highest Temperature Records in 5 Districts [BOTTOM]"),
+      "Average.Temperature" = paste("Average Temperature Records in 5 Districts [BOTTOM]"),
+      "Humidity" = paste("Humidity Records in 5 Districts [BOTTOM]"),
+    )
   )
   
   
   # Rendering table with 5 states with high arrests for specific crime type
   output$top5 <- renderTable({
     
-    my_data %>% 
+    top <- my_data
+    
+    top %>% 
       select(District, input$var2) %>% 
       arrange(desc(get(input$var2))) %>% 
       head(5)
     
-  })
+  },colnames = FALSE)
   
   # Rendering table with 5 states with low arrests for specific crime type
   output$low5 <- renderTable({
@@ -36,7 +50,7 @@ function(input, output, session){
       head(5)
     
     
-  })
+  },colnames = FALSE)
   
   
   # For Structure output
@@ -52,17 +66,44 @@ function(input, output, session){
       summary()
   })
   
-
   
+
   
   ### Bar Charts - District wise trend
   output$bar <- renderPlotly({
-    my_data %>% 
-      plot_ly() %>% 
-      add_bars(x=~District, y=~get(input$var2)) %>% 
-      layout(title = paste(input$var2, "readings for each district"),
-             xaxis = list(title = "District"),
-             yaxis = list(title = paste(input$var2, "Readings") ))
+    
+    if (input$var2 =="Highest.Temperature"){
+      my_data %>% 
+        plot_ly() %>% 
+        add_bars(x=~District, y=~get(input$var2)) %>% 
+        layout(title = paste("Highest Temperature readings for each district"),
+               xaxis = list(title = "District"),
+               yaxis = list(title = paste("Highest Temperature Readings") ))
+    }
+    else if (input$var2 =="Average.Temperature"){
+      my_data %>% 
+        plot_ly() %>% 
+        add_bars(x=~District, y=~get(input$var2)) %>% 
+        layout(title = paste("Average Temperature readings for each district"),
+               xaxis = list(title = "District"),
+               yaxis = list(title = paste("Average Temperature Readings") ))
+    }
+    else if (input$var2 =="Humidity"){
+      my_data %>% 
+        plot_ly() %>% 
+        add_bars(x=~District, y=~get(input$var2)) %>% 
+        layout(title = paste("Humidity readings for each district"),
+               xaxis = list(title = "District"),
+               yaxis = list(title = paste("Humidity Readings") ))
+    }else{
+      my_data %>% 
+        plot_ly() %>% 
+        add_bars(x=~District, y=~get(input$var2)) %>% 
+        layout(title = paste("Lowest Temperature readings for each district"),
+               xaxis = list(title = "District"),
+               yaxis = list(title = paste("Lowest Temperature Readings") ))
+    }
+    
   })
   
   ### Scatter Charts 
@@ -85,6 +126,7 @@ function(input, output, session){
   
     
   })
+  ########################
   
   # render panel data table
   output$dataT2 <-  DT::renderDataTable(DT::datatable(panels,options = list(lengthMenu = c(5, 10, 15), pageLength = 5)))
@@ -106,10 +148,15 @@ function(input, output, session){
   ### Bar Charts - Panel data
   output$panal_data <- renderPlotly({
     panels_data  %>% 
-      plot_ly(x = ~Model, y = ~Power.Watt, type = 'bar', name ="Ideal Power Output") %>%
-      add_trace(y = ~Power.Loss.per.1.C, name ="Loss per +1 C") %>%
-      layout(yaxis = list(title = 'Power'), barmode = 'stack')
+      plot_ly(x = ~Model,y = ~Power.Loss.per.1.C, type = 'bar', name ="Loss per +1 C") %>%
+      add_trace( y = ~Power.Watt, name ="Power Output") %>%
+      layout(yaxis = list(title = 'Ideal Power Output/ Power Loss'), barmode = 'stack')
   })
   
+  ########################
+  
+  # render panel data table
+  output$dataT3 <-  DT::renderDataTable(DT::datatable(research,options = list(lengthMenu = c(5, 10, 15), pageLength = 5), rownames = FALSE))
+
 }
 

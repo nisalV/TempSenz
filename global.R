@@ -8,6 +8,7 @@ library(ggtext) # beautifying text on top of ggplot
 library(maps)
 library(ggcorrplot) # for correlation plot
 library(shinycssloaders) # to add a loader while graph is populating
+library(shinyWidgets)
 
 
 ## importing "Climate_Data_Sri_Lanka.csv"
@@ -35,6 +36,8 @@ rownames(panels_data) <- panels_data$Model
 panels = panels_data %>% 
   select(-"Model")
 
+## importing research data
+research <- read.csv("panels_and_climate.csv",sep=",") 
 
 
 
