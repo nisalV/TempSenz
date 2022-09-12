@@ -20,7 +20,7 @@ rownames(my_data) <- my_data$District
 # sorting my_data
 my_data <- my_data[order(my_data$District),]
 
-# Column names without state. This will be used in the selectinput for choices in the shinydashboard
+# Climate Column names without state. This will be used in the selectinput for choices in the shinydashboard
 c1 = my_data %>% 
   select(-"District") %>% 
   names()
@@ -39,5 +39,17 @@ panels = panels_data %>%
 ## importing research data
 research <- read.csv("panels_and_climate.csv",sep=",") 
 
+research <- research[order(research$"Ambient.Temp"),]
 
+# Research Column names without state. This will be used in the selectinput for choices in the shinydashboard
+c2 = research %>% 
+  select("Current.A","Voltage.V","Power","Panel.Temp","Relative.Humidity") %>% 
+  names()
 
+c3 = research %>% 
+  select("Current.A","Voltage.V","Power","Relative.Humidity","Ambient.Temp") %>% 
+  names()
+
+c4 = research %>% 
+  select("Current.A","Voltage.V","Power","Panel.Temp","Relative.Humidity","Ambient.Temp") %>% 
+  names()

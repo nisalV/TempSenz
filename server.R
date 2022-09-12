@@ -158,5 +158,35 @@ function(input, output, session){
   # render panel data table
   output$dataT3 <-  DT::renderDataTable(DT::datatable(research,options = list(lengthMenu = c(5, 10, 15), pageLength = 5), rownames = FALSE))
 
+  
+output$plot1 <- renderPlotly({
+  research %>%
+    ggplot(aes(x=Ambient.Temp, y=get(input$var5), color = "red")) +
+    geom_line() + geom_point()+scale_color_manual(values=c("#56B4E9", "#ffffff"))+
+    labs(x = "Ambient Temperature (C)",
+         y = input$var5)+
+    theme( plot.title = element_textbox_simple(size=10,
+                                              halign=0.5),legend.position="none")
+})
+
+output$plot2 <- renderPlotly({
+  research %>%
+    ggplot(aes(x=Panel.Temp, y=get(input$var6), color = "red")) +
+    geom_line() + geom_point()+scale_color_manual(values=c("#56B4E9", "#ffffff"))+
+    labs(x = "Panel Temperature (C)",
+         y = input$var6)+
+    theme( plot.title = element_textbox_simple(size=10,
+                                               halign=0.5),legend.position="none")
+})
+
+output$plot3 <- renderPlotly({
+  research %>%
+    ggplot(aes(x=get(input$var7), y=get(input$var8), color = "red")) +
+    geom_line() + geom_point()+scale_color_manual(values=c("#56B4E9", "#ffffff"))+
+    labs(x = input$var7,
+         y = input$var8)+
+    theme( plot.title = element_textbox_simple(size=10,
+                                               halign=0.5),legend.position="none")
+})
 }
 

@@ -14,9 +14,9 @@ dashboardPage(
                 
                 # Conditional Panel for conditional widget appearance
                 # Filter should appear only for the visualization menu and selected tabs within it
-                conditionalPanel("input.sidebar == 'viz' && input.t2 == 'trends' ", prettyRadioButtons(inputId = "var2" , label ="Reading type" , choices = c1,plain =TRUE, status = "success")),
-                conditionalPanel("input.sidebar == 'viz' && input.t2 == 'relation' ", prettyRadioButtons(inputId = "var3" , label ="X variable" , choices = c1, selected = "Average.Temperature", status = "success")),
-                conditionalPanel("input.sidebar == 'viz' && input.t2 == 'relation' ", prettyRadioButtons(inputId = "var4" , label ="Y variable" , choices = c1, selected = "Humidity", status = "success"))
+                conditionalPanel("input.sidebar == 'viz' && input.t2 == 'trends' ", prettyRadioButtons(inputId = "var2" , label ="Climate Reading Type" , choices = c1,plain =TRUE, status = "success")),
+                conditionalPanel("input.sidebar == 'viz' && input.t2 == 'relation' ", prettyRadioButtons(inputId = "var3" , label ="Climate Data X variable" , choices = c1, selected = "Average.Temperature", status = "success")),
+                conditionalPanel("input.sidebar == 'viz' && input.t2 == 'relation' ", prettyRadioButtons(inputId = "var4" , label ="Climate Data Y variable" , choices = c1, selected = "Humidity", status = "success"))
                 
     )
   ),
@@ -49,7 +49,7 @@ dashboardPage(
       
       # Second Tab Item
       tabItem(tabName = "viz", 
-              h2("Research Data Analysis"),
+              
               h2("Climate Data Analysis"),
               tabBox(id="t2",  width=12, 
                      tabPanel(span("Readings by District", style = "font-size: 20px"), value="trends",
@@ -60,6 +60,28 @@ dashboardPage(
                      tabPanel(span("Relation Analysis", style = "font-size: 20px"), 
                               radioButtons(inputId ="fit" , label = "Select smooth method" , choices = c("loess", "lm"), selected = "lm" , inline = TRUE), 
                               withSpinner(plotlyOutput("scatter")), value="relation"),
+                     side = "left"
+              ),
+              h2("Research Data Analysis"),
+              tabBox(id="t4",  width=12, 
+                     tabPanel(span("Plots", style = "font-size: 20px"), value="panelTemp",
+                              fluidRow(column(1),
+                                       column(3,selectInput(inputId = "var5" , label ="Y variable" , choices = c2)),
+                                       column(3),
+                                       column(3,selectInput(inputId = "var6" , label ="Y variable" , choices = c3)),
+                                       column(2)),
+                              fluidRow(column(6,withSpinner(plotlyOutput("plot1"))),
+                                       column(6,withSpinner(plotlyOutput("plot2")))),
+                              hr(),
+                              fluidRow(column(3),
+                                       column(3,selectInput(inputId = "var7" , label ="X variable" , choices = c4, selected = "Panel.Temp")),
+                                       column(3,selectInput(inputId = "var8" , label ="Y variable" , choices = c4,selected = "Current.A")),
+                                       column(3)),
+                              fluidRow(column(2),
+                                       column(8,withSpinner(plotlyOutput("plot3"))),
+                                       column(2))
+                              
+                     ),
                      side = "left"
               ),
               h2("Panel Power output"),
