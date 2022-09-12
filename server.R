@@ -55,7 +55,7 @@ function(input, output, session){
 
   
   
-  ### Bar Charts - State wise trend
+  ### Bar Charts - District wise trend
   output$bar <- renderPlotly({
     my_data %>% 
       plot_ly() %>% 
@@ -64,7 +64,6 @@ function(input, output, session){
              xaxis = list(title = "District"),
              yaxis = list(title = paste(input$var2, "Readings") ))
   })
-  
   
   ### Scatter Charts 
   output$scatter <- renderPlotly({
@@ -104,6 +103,13 @@ function(input, output, session){
       summary()
   })
   
+  ### Bar Charts - Panel data
+  output$panal_data <- renderPlotly({
+    panels_data  %>% 
+      plot_ly(x = ~Model, y = ~Power.Watt, type = 'bar', name ="Ideal Power Output") %>%
+      add_trace(y = ~Power.Loss.per.1.C, name ="Loss per +1 C") %>%
+      layout(yaxis = list(title = 'Power'), barmode = 'stack')
+  })
   
 }
 

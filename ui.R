@@ -4,12 +4,12 @@ dashboardPage(
 
   skin = "purple",
   
-  dashboardHeader(title="TempSenz Dashboard", titleWidth = 300
+  dashboardHeader(title=span("TempSenz Dashboard",style = "font-size: 40px"), titleWidth = 250
   ),
   
-  
   dashboardSidebar(
-    sidebarMenu(id = "sidebar",
+    width = 250,
+    sidebarMenu(id = "sidebar",style = 'font-size: 20px',
                 menuItem("Dataset", tabName = "data", icon = icon("database")),
                 menuItem("Visualization", tabName = "viz", icon=icon("chart-line")),
                 
@@ -30,21 +30,24 @@ dashboardPage(
       
       ## First tab item
       tabItem(tabName = "data", 
+              h2("Climate Dataset"),
               tabBox(id="t1", width = 12,
                      tabPanel("Data", dataTableOutput("dataT"), icon = icon("table")), 
-                     tabPanel("Structure", verbatimTextOutput("structure"), icon=icon("uncharted")),
-                     tabPanel("Summary Stats", verbatimTextOutput("summary"), icon=icon("chart-pie"))
+                     tabPanel("Data Structure", verbatimTextOutput("structure"), icon=icon("uncharted")),
+                     tabPanel("Summary", verbatimTextOutput("summary"), icon=icon("chart-pie"))
               ),
+              h2("Solar Panel Dataset"),
               tabBox(id="t1", width = 12,
                      tabPanel("Data", dataTableOutput("dataT2"), icon = icon("table")), 
-                     tabPanel("Structure", verbatimTextOutput("panelStructure"), icon=icon("uncharted")),
-                     tabPanel("Summary Stats", verbatimTextOutput("panelSummary"), icon=icon("chart-pie"))
+                     tabPanel("Data Structure", verbatimTextOutput("panelStructure"), icon=icon("uncharted")),
+                     tabPanel("Summary", verbatimTextOutput("panelSummary"), icon=icon("chart-pie"))
               )
               
       ),  
       
       # Second Tab Item
       tabItem(tabName = "viz", 
+              h2("Climate Data Visualization"),
               tabBox(id="t2",  width=12, 
                      tabPanel("Readings by District", value="trends",
                               fluidRow(tags$div(align="center", box(tableOutput("top5"), title = textOutput("head1") , collapsible = TRUE, status = "primary",  collapsed = TRUE, solidHeader = TRUE)),
@@ -57,8 +60,9 @@ dashboardPage(
                               radioButtons(inputId ="fit" , label = "Select smooth method" , choices = c("loess", "lm"), selected = "lm" , inline = TRUE), 
                               withSpinner(plotlyOutput("scatter")), value="relation"),
                      side = "left"
-              )
-              
+              ),
+              h2("Panel Power output"),
+              withSpinner(plotlyOutput("panal_data"))
       )
     )
     
