@@ -1,47 +1,47 @@
-library(shiny) # shiny features
-library(shinydashboard) # shinydashboard functions
-library(DT)  # for DT tables
-library(dplyr)  # for pipe operator & data manipulations
-library(plotly) # for data visualization and plots using plotly 
-library(ggplot2) # for data visualization & plots using ggplot2
-library(ggtext) # beautifying text on top of ggplot
+library(shiny)
+library(shinydashboard) 
+library(DT) 
+library(dplyr)  
+library(plotly) 
+library(ggplot2)
+library(ggtext)
 library(maps)
-library(ggcorrplot) # for correlation plot
-library(shinycssloaders) # to add a loader while graph is populating
+library(ggcorrplot)
+library(shinycssloaders) 
 library(shinyWidgets)
 
 
-## importing "Climate_Data_Sri_Lanka.csv"
+# importing "Climate_Data_Sri_Lanka.csv"
 my_data <- read.csv("Climate_Data_Sri_Lanka.csv",sep=",") 
 
-## create a states object from rownames
+# create a states object from rownames
 rownames(my_data) <- my_data$District
 
 # sorting my_data
 my_data <- my_data[order(my_data$District),]
 
-# Climate Column names without state. This will be used in the selectinput for choices in the shinydashboard
+# Climate Column names without District.
 c1 = my_data %>% 
   select(-"District") %>% 
   names()
 
-# dataframe without "District" column. used to create the database table
+# data frame without "District" column
 my_data1 = my_data %>% 
   select(-"District")
 
-## importing "panel_list.csv"
+# importing "panel_list.csv"
 panels_data <- read.csv("panel_list.csv",sep=",") 
 rownames(panels_data) <- panels_data$Model
 
 panels = panels_data %>% 
   select(-"Model")
 
-## importing research data
+# importing research data
 research <- read.csv("panels_and_climate.csv",sep=",") 
 
 research <- research[order(research$"Ambient.Temp"),]
 
-# Research Column names without state. This will be used in the selectinput for choices in the shinydashboard
+# Research Column names without District
 c2 = research %>% 
   select("Current.A","Voltage.V","Power","Panel.Temp","Relative.Humidity") %>% 
   names()
@@ -52,4 +52,11 @@ c3 = research %>%
 
 c4 = research %>% 
   select("Current.A","Voltage.V","Power","Panel.Temp","Relative.Humidity","Ambient.Temp") %>% 
+  names()
+
+efficiency <- read.csv("panel_efficiency.csv",sep=",") 
+
+
+c5 = efficiency %>% 
+  select(-"Model",-"Efficiency.Ideal",-"Efficiency.Loss.per.1.C") %>% 
   names()

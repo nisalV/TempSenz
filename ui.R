@@ -1,5 +1,3 @@
-## Shiny UI component for the Dashboard
-
 dashboardPage(
   skin = "purple",
   
@@ -12,8 +10,6 @@ dashboardPage(
                 menuItem(span("Dataset", style = "font-size: 25px"), tabName = "data", icon = icon("database")),
                 menuItem(span("Data Analysis", style = "font-size: 25px"), tabName = "viz", icon=icon("chart-line")),
                 
-                # Conditional Panel for conditional widget appearance
-                # Filter should appear only for the visualization menu and selected tabs within it
                 conditionalPanel("input.sidebar == 'viz' && input.t2 == 'trends' ", prettyRadioButtons(inputId = "var2" , label ="Climate Reading Type" , choices = c1,plain =TRUE, status = "success")),
                 conditionalPanel("input.sidebar == 'viz' && input.t2 == 'relation' ", prettyRadioButtons(inputId = "var3" , label ="Climate Data X variable" , choices = c1, selected = "Average.Temperature", status = "success")),
                 conditionalPanel("input.sidebar == 'viz' && input.t2 == 'relation' ", prettyRadioButtons(inputId = "var4" , label ="Climate Data Y variable" , choices = c1, selected = "Humidity", status = "success"))
@@ -23,11 +19,10 @@ dashboardPage(
   
   
   dashboardBody(
-    style = "font-family: monospace; min-height: 1550px",
+    style = "font-family: monospace; min-height: 2800px",
 
     tabItems(
       
-      ## First tab item
       tabItem(tabName = "data", 
               
               h2("Climate Dataset"),
@@ -47,7 +42,6 @@ dashboardPage(
               
       ),  
       
-      # Second Tab Item
       tabItem(tabName = "viz", 
               
               h2("Climate Data Analysis"),
@@ -84,8 +78,15 @@ dashboardPage(
                      ),
                      side = "left"
               ),
-              h2("Panel Power output"),
-              withSpinner(plotlyOutput("panal_data"))
+              h2("Power Efficiency [%] at Ideal Conditions [24 C Panel Surface temperature]"),
+              withSpinner(plotlyOutput("panal_data")),
+              h2("Ideal Efficiency & Calculated Efficiency According to Average Temperature of an Area"),
+              tabBox(id="t5",  width=12, 
+              fluidRow(column(1),
+                       column(3,selectInput(inputId = "var9" , label ="Select A District" , choices = c5)),
+                       column(8)),
+              fluidRow(withSpinner(plotlyOutput("efficiency_data"))))
+              
       )
     )
     

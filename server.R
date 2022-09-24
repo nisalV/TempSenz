@@ -1,35 +1,31 @@
-## Shiny Server component for dashboard
+
 
 function(input, output, session){
   
-  # Data table Output
   output$dataT <- DT::renderDataTable(DT::datatable(my_data1,options = list(lengthMenu = c(5, 10, 15), pageLength = 5)))
   
   
-  # Rendering the box header  
+  # box header  
   output$head1 <- renderText(
     switch(
       input$var2,
-      "Lowest.Temperature" = paste("Lowest Temperature Records in 5 Districts [TOP]"),
-      "Highest.Temperature" = paste("Highest Temperature Records in 5 Districts [TOP]"),
-      "Average.Temperature" = paste("Average Temperature Records in 5 Districts [TOP]"),
+      "Lowest.Temperature" = paste("Lowest Temperature Records in Districts [TOP]"),
+      "Highest.Temperature" = paste("Highest Temperature Records in Districts [TOP]"),
+      "Average.Temperature" = paste("Average Temperature Records in Districts [TOP]"),
       "Humidity" = paste("Humidity Records in 5 Districts [TOP]"),
     )
   )
   
-  # Rendering the box header 
   output$head2 <- renderText(
     switch(
       input$var2,
-      "Lowest.Temperature" = paste("Lowest Temperature Records in 5 Districts [BOTTOM]"),
-      "Highest.Temperature" = paste("Highest Temperature Records in 5 Districts [BOTTOM]"),
-      "Average.Temperature" = paste("Average Temperature Records in 5 Districts [BOTTOM]"),
+      "Lowest.Temperature" = paste("Lowest Temperature Records in Districts [BOTTOM]"),
+      "Highest.Temperature" = paste("Highest Temperature Records in Districts [BOTTOM]"),
+      "Average.Temperature" = paste("Average Temperature Records in Districts [BOTTOM]"),
       "Humidity" = paste("Humidity Records in 5 Districts [BOTTOM]"),
     )
   )
   
-  
-  # Rendering table with 5 states with high arrests for specific crime type
   output$top5 <- renderTable({
     
     top <- my_data
@@ -41,7 +37,6 @@ function(input, output, session){
     
   },colnames = FALSE)
   
-  # Rendering table with 5 states with low arrests for specific crime type
   output$low5 <- renderTable({
     
     my_data %>% 
@@ -53,14 +48,14 @@ function(input, output, session){
   },colnames = FALSE)
   
   
-  # For Structure output
+  # structure output
   output$structure <- renderPrint({
     my_data %>% 
       str()
   })
   
   
-  # For Summary Output
+  # summary Output
   output$summary <- renderPrint({
     my_data %>% 
       summary()
@@ -69,7 +64,7 @@ function(input, output, session){
   
 
   
-  ### Bar Charts - District wise trend
+  # Bar Charts - District wise trend
   output$bar <- renderPlotly({
     
     if (input$var2 =="Highest.Temperature"){
@@ -106,7 +101,7 @@ function(input, output, session){
     
   })
   
-  ### Scatter Charts 
+  # Scatter Charts 
   output$scatter <- renderPlotly({
     p = my_data %>% 
       ggplot(aes(x=get(input$var3), y=get(input$var4))) +
@@ -128,34 +123,34 @@ function(input, output, session){
   })
   ########################
   
-  # render panel data table
+  # panel data table
   output$dataT2 <-  DT::renderDataTable(DT::datatable(panels,options = list(lengthMenu = c(5, 10, 15), pageLength = 5)))
 
   
-  # For Structure output
+  # structure output
   output$panelStructure <- renderPrint({
     panels %>% 
       str()
   })
   
   
-  # For Summary Output
+  # summary Output
   output$panelSummary <- renderPrint({
     panels %>% 
       summary()
   })
   
-  ### Bar Charts - Panel data
+  # Bar Charts - Panel data
   output$panal_data <- renderPlotly({
     panels_data  %>% 
-      plot_ly(x = ~Model,y = ~Power.Loss.per.1.C, type = 'bar', name ="Loss per +1 C") %>%
-      add_trace( y = ~Power.Watt, name ="Power Output") %>%
-      layout(yaxis = list(title = 'Ideal Power Output/ Power Loss'), barmode = 'stack')
+      plot_ly(x = ~Model,y = ~Efficiency.Loss.per.1.C, type = 'bar', name ="Efficiency Loss per +1 C") %>%
+      add_trace( y = ~Efficiency, name ="Power Efficiency in Idial Conditions (%)") %>%
+      layout(title = "Power Efficiency [%] & Efficiency Loss per +1 C",yaxis = list(title = 'Power Efficiency/ Efficiency Loss (%)'), barmode = 'stack')
   })
   
   ########################
   
-  # render panel data table
+  # research data table
   output$dataT3 <-  DT::renderDataTable(DT::datatable(research,options = list(lengthMenu = c(5, 10, 15), pageLength = 5), rownames = FALSE))
 
   
@@ -188,5 +183,14 @@ output$plot3 <- renderPlotly({
     theme( plot.title = element_textbox_simple(size=10,
                                                halign=0.5),legend.position="none")
 })
+
+output$efficiency_data <- renderPlotly({
+  efficiency  %>% 
+    plot_ly(x = ~Model,y = ~Efficiency.Ideal , type = 'bar', name ="Ideal Efficiency (%)") %>%
+    add_trace( y = ~get(input$var9), name ="Real Efficiency (%)") %>%
+    layout(yaxis = list(title = 'Ideal Efficiency/ Real Efficiency (%)'), barmode = 'group')
+})
+
+
 }
 

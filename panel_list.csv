@@ -1,26 +1,16 @@
-"Model","Company","Power Watt","Size","Material","Efficient Temperature","Power Loss per 1 C","Price"
-nkv31,ABC,234.00,24x24,Silicon,27.00,0.05,250.00
-596h2,ABC,234.00,24x25,Silicon,27.00,0.05,250.00
-7njf53,ABC,234.00,24x26,Silicon,27.00,0.05,250.00
-567n4,ABC,234.00,24x27,Silicon,27.00,0.05,250.00
-ght675,ABC,234.00,24x28,Silicon,27.00,0.05,250.00
-dg56,ABC,234.00,24x29,Silicon,27.00,0.05,250.00
-574o7,vdc,270.00,24x30,Silicon,24.00,0.05,300.00
-4573f8g,vdc,270.00,24x31,Silicon,24.00,0.04,300.00
-f568g59,vdc,270.00,24x32,Silicon,24.00,0.04,300.00
-g65410,vdc,270.00,24x33,Silicon,24.00,10.04,300.00
-t50011,vdc,270.00,24x34,Silicon,24.00,0.04,300.00
-df40012,vdc,270.00,24x35,Silicon,24.00,20.04,300.00
-y60013,Pqr,270.00,24x36,Silicon,24.00,0.04,300.00
-500t14,Pqr,270.00,24x37,Silicon,24.00,0.04,300.00
-600y15,Pqr,270.00,24x38,Silicon,24.00,0.04,300.00
-y40016,Pqr,270.00,24x39,Silicon,24.00,0.04,300.00
-t40017,Pqr,270.00,24x40,Silicon,24.00,0.04,300.00
-er60018,GFRT,270.00,24x41,Silicon,24.00,0.04,300.00
-er700d19,GFRT,270.00,24x42,Silicon,24.00,0.04,300.00
-d35020,GFRT,260.00,24x43,Silicon,25.00,0.05,275.00
-fg421,GFRT,260.00,24x44,Silicon,25.00,0.05,275.00
-900t22,ZWER,260.00,24x45,Silicon,25.00,0.05,275.00
-sd3423,ZWER,260.00,24x46,Silicon,25.00,0.05,275.00
-sd34d25,ZWER,260.00,24x47,Silicon,25.00,0.05,275.00
-f70024,ZWER,260.00,24x48,Silicon,25.00,0.05,275.00
+"Model","Company","Power Watt","Size","Material","Efficiency","Efficiency Loss per 1 C","Price"
+JW-HD132N,Jolywood,700.00,210mm,N-Type HC TOPCon MBB,22.5,0.03,459.99
+Himalaya G12,Huasun,700.00,210mm,N-Type HC Bifacial MBB,22.5,0.03,450.53
+Chaser M12 132P,Akcome,700.00,210mm,N-Type HC Bifacial MBB,22.2,0.04,457.89
+Vertex,Trina Solar,670.00,210mm,P-Type Mono-PERC MBB,20.6,0.08,432.00
+Titan,Risen Energy,670.00,210mm,P-Type Mono-PERC MBB,20.4,0.09,430.84
+Astro 6,Astronergy,670.00,210mm,P-Type HC PERC+ MBB,19.9,0.17,420.55
+HiKu7,Canadian Solar,670.00,210mm,P-Type HC PERC+ MBB,19.9,0.17,420.00
+Mono GG,Yingli Solar,670.00,210mm,P-Type HC PERC+ MBB,18.6,0.25,420.00
+Ultra X Plus,Suntech,670.00,210mm,P-Type HC PERC+ MBB,18.6,0.25,415.00
+S5 Bifacial,Seraphim,670.00,210mm,P-Type HC PERC+ MBB,18.6,0.25,420.73
+BiPRO,Talesun,670.00,210mm,P-Type HC PERC+ MBB,18.1,0.29,410.00
+Aurora,AE Solar,665.00,210mm,P-Type HC PERC MBB,17.4,0.37,399.99
+Tiger Pro NEO,Jinko Solar,620.00,182mm,N-Type HC TOPCon MBB,16.9,0.41,289.63
+Deep Blue 3.0,JA Solar,605.00,182mm,P-Type HC PERC MBB,16.3,0.46,260.57
+Q.PEAK DUO XL-G11.2,Q CELLS,590.00,182mm,P-Type HC PERC MBB,15.5,0.53,249.00
